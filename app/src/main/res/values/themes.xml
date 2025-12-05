@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema utama aplikasi -->
+    <style name="Theme.SimpleChatApp" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Di sini nanti kalau mau bisa tambah item warna -->
+        <!-- contoh:
+        <item name="colorPrimary">@color/purple_500</item>
+        -->
+    </style>
+
+</resources>

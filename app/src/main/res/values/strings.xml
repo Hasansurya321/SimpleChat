@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SimpleChatApp</string>
-
+    <string name="app_name">Simple Chat App</string>
     <string name="sign_in">Sign In</string>
-    <string name="sign_up">Sign Up</string>
     <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="full_name">Nama Lengkap</string>
     <string name="login">Login</string>
-    <string name="register">Daftar Akun</string>
-    <string name="back_to_login">Kembali ke Login</string>
-    <string name="chat_hint">Tulis pesan</string>
-    <string name="chat_send">Kirim</string>
-
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="back_to_login">Back to Login</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.simplechatapp;
+package com.example.simplechatapp.model;
 
 /**
  * Model data untuk satu pesan chat.

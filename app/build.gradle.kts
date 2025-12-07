@@ -2,6 +2,7 @@
 
 plugins {
     id("com.android.application")
+    // Versi Kotlin akan diambil dari file build.gradle.kts level proyek
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
 }
@@ -50,10 +51,13 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Firebase BOM
-    implementation(platform("com.google.firebase:firebase-bom:33.5.0"))
+    // Firebase BOM diubah ke versi 33.4.0 sesuai arahan
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // Dependensi Firebase tanpa versi manual (diatur oleh BOM)
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -62,6 +66,8 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
-    implementation("com.google.firebase:firebase-storage")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // Tambahkan Gson untuk konversi JSON
+    implementation("com.google.code.gson:gson:2.10.1")
 }

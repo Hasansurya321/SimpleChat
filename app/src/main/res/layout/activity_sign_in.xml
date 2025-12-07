@@ -16,10 +16,10 @@
         android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/inputUsername"
-        android:hint="@string/username"
-        android:autofillHints="username"
-        android:inputType="text"
+        android:id="@+id/inputEmail"
+        android:hint="@string/email"
+        android:autofillHints="emailAddress"
+        android:inputType="textEmailAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -45,4 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 </LinearLayout>

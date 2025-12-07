@@ -1,4 +1,4 @@
-package com.example.simplechatapp;
+package com.example.simplechatapp.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.simplechatapp.R;
+import com.example.simplechatapp.model.ChatMessage;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

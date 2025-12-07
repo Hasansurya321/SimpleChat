@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,13 +32,13 @@ public class ChatActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE = 1001;
 
     private User receiverUser;
-    private PreferenceManager preferenceManager;
     private FirebaseFirestore db;
-    private FirebaseStorage storage;
 
     private RecyclerView recyclerViewChat;
     private EditText inputMessage;
     private Button buttonSend, buttonImage;
+    private TextView textUserName;
+    private ProgressBar progressBar;
 
     private List<ChatMessage> messages;
     private ChatAdapter chatAdapter;
@@ -53,16 +57,18 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        preferenceManager = new PreferenceManager(getApplicationContext());
-        myId = preferenceManager.getString("userId");
+        myId = FirebaseAuth.getInstance().getUid();
 
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance();
 
         recyclerViewChat = findViewById(R.id.recyclerViewChat);
         inputMessage = findViewById(R.id.inputMessage);
         buttonSend = findViewById(R.id.buttonSend);
         buttonImage = findViewById(R.id.buttonImage);
+        textUserName = findViewById(R.id.textUserName);
+        progressBar = findViewById(R.id.progressBar);
+
+        textUserName.setText(receiverUser.name);
 
         messages = new ArrayList<>();
         chatAdapter = new ChatAdapter(messages, myId);
@@ -143,20 +149,29 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(Uri uri) {
-        String fileName = "chat_images/" + System.currentTimeMillis() + ".jpg";
-        StorageReference ref = storage.getReference().child(fileName);
+    private void uploadImage(Uri imageUri) {
+        progressBar.setVisibility(View.VISIBLE);
+        StorageReference ref = FirebaseStorage.getInstance()
+                .getReference("chat_images/" + System.currentTimeMillis() + ".jpg");
 
-        ref.putFile(uri)
-                .addOnSuccessListener(snap ->
-                        ref.getDownloadUrl().addOnSuccessListener(url ->
-                                sendImageMessage(url.toString())))
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Gagal upload: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
+        ref.putFile(imageUri)
+            .addOnSuccessListener(taskSnapshot ->
+                    ref.getDownloadUrl().addOnSuccessListener(uri -> {
+                        progressBar.setVisibility(View.GONE);
+                        sendMessageWithImage(uri.toString());
+
+                    }).addOnFailureListener(e -> {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(this, "Gagal ambil URL gambar", Toast.LENGTH_SHORT).show();
+                    })
+            )
+            .addOnFailureListener(e -> {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(this, "Upload gagal: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
     }
 
-    private void sendImageMessage(String imageUrl) {
+    private void sendMessageWithImage(String imageUrl) {
         ChatMessage msg = new ChatMessage();
         msg.senderId = myId;
         msg.receiverId = receiverUser.id;

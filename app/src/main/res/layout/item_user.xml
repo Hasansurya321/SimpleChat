@@ -40,4 +40,11 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageOnlineStatus"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_online_dot"
+        android:visibility="gone"/>
+
 </LinearLayout>

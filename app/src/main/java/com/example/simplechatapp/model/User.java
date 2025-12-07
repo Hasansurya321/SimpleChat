@@ -1,4 +1,4 @@
-package com.example.simplechatapp;
+package com.example.simplechatapp.model;
 
 import java.io.Serializable;
 
@@ -7,10 +7,10 @@ public class User implements Serializable {
     public String name;
     public String username;
     public String image;
-    public boolean online;
-    public long lastSeen;
 
-    public User() {}
+    public User() {
+        // Diperlukan oleh Firestore
+    }
 
     public User(String id, String name, String username, String image) {
         this.id = id;

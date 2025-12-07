@@ -1,4 +1,4 @@
-package com.example.simplechatapp;
+package com.example.simplechatapp.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.simplechatapp.R;
+import com.example.simplechatapp.model.User;
 
 import java.util.List;
 
@@ -39,10 +43,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
         holder.textName.setText(user.name);
         holder.textUsername.setText(user.username);
 
-        if (user.online) {
-            holder.imageOnlineStatus.setVisibility(View.VISIBLE);
+        if (user.image != null && !user.image.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                .load(user.image)
+                .into(holder.imageAvatar);
         } else {
-            holder.imageOnlineStatus.setVisibility(View.GONE);
+            holder.imageAvatar.setImageResource(R.mipmap.ic_launcher_round);
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -59,13 +65,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
 
     static class UserViewHolder extends RecyclerView.ViewHolder {
         TextView textName, textUsername;
-        ImageView imageOnlineStatus;
+        ImageView imageAvatar;
 
         UserViewHolder(@NonNull View itemView) {
             super(itemView);
             textName = itemView.findViewById(R.id.textName);
             textUsername = itemView.findViewById(R.id.textUsername);
-            imageOnlineStatus = itemView.findViewById(R.id.imageOnlineStatus);
+            imageAvatar = itemView.findViewById(R.id.imageAvatar);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.simplechatapp;
+package com.example.simplechatapp.ui.users;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.simplechatapp.R;
+import com.example.simplechatapp.adapter.UsersAdapter;
+import com.example.simplechatapp.model.User;
+import com.example.simplechatapp.ui.auth.SignInActivity;
+import com.example.simplechatapp.ui.chat.ChatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,11 +23,11 @@ import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    UsersAdapter adapter;
-    ImageView btnBack;
-    Button btnLogout;
-    ProgressBar progressBarUsers;
+    private RecyclerView recyclerView;
+    private UsersAdapter adapter;
+    private ImageView btnBack;
+    private Button btnLogout;
+    private ProgressBar progressBarUsers;
 
     private FirebaseFirestore db;
 
@@ -76,10 +81,8 @@ public class UsersActivity extends AppCompatActivity {
                         String id = doc.getId();
                         if (id.equals(myId)) continue;
 
-                        User u = new User();
+                        User u = doc.toObject(User.class);
                         u.id = id;
-                        u.name = doc.getString("name");
-                        u.image = doc.getString("image");
                         users.add(u);
                     }
 
